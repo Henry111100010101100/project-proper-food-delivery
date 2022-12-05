@@ -243,24 +243,22 @@ window.addEventListener('DOMContentLoaded', function() {
              
             const formData = new FormData(form); // нам нужно этот объект превратить в JSON, но formData - это довольно специфический объект, мы не можем прогнать его просто так в другой формат, для этого воспользуемся следующим приемом:
 
-          /*   const object = {};
+            const object = {};
 
             formData.forEach(function(value, key){
                 object[key] = value; 
-            }); */ // формируем объект object на основании данных из formData путем использования перебора forEach()
+            }); // формируем объект object на основании данных из formData путем использования перебора forEach()
 
             // теперь, когда мы получили обычный объект из данных formData, мы можем преобразовать его в JSON:
-
-            //const json = JSON.stringify(object); // превратили обычный объект в JSON
 
             //request.send(json); // помещаем JSON в body;
 
             fetch('server.php', {
                 method: "POST",
-                /* headers: {
+                headers: {
                     'Content-type': 'application/json'
-                }, */
-                body: formData
+                }, 
+                body: JSON.stringify(object)
             })
             .then(data => data.text())
             .then(data =>{
