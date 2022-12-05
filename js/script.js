@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function() {
     
     // Timer
 
-    const deadline = '2022-06-12';
+    const deadline = '2023-02-22';
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -231,32 +231,51 @@ window.addEventListener('DOMContentLoaded', function() {
             `;
             form.insertAdjacentElement('afterend', statusMessage);
 
+            /* const request = new XMLHttpRequest();
+            request.open("POST", "server.php"); - если формировать запросы по старинке, через XMLHttpRequest() */
 
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-
+            
             //request.setRequestHeader('Content-type', 'multipart/form-data'); - когда мы используем связку XMLHttpRequest-объекта + FormData нам не нужно устанавливать заголовок через метод setRequestHeader он устанавливается автоматически, в противном случае будут ошибки при работе с сервером
 
 
-            // если нужно отправить в формате JSON:
-
-            request.setRequestHeader('Content-type', 'application/json');
+            /* если нужно отправить в формате JSON:
+            request.setRequestHeader('Content-type', 'application/json'); */
              
             const formData = new FormData(form); // нам нужно этот объект превратить в JSON, но formData - это довольно специфический объект, мы не можем прогнать его просто так в другой формат, для этого воспользуемся следующим приемом:
 
-            const object = {};
+          /*   const object = {};
 
             formData.forEach(function(value, key){
-                object[key] = value;
-            }); // формируем объект object на основании данных из formData путем использования перебора forEach()
+                object[key] = value; 
+            }); */ // формируем объект object на основании данных из formData путем использования перебора forEach()
 
             // теперь, когда мы получили обычный объект из данных formData, мы можем преобразовать его в JSON:
 
-            const json = JSON.stringify(object); // превратили обычный объект в JSON
+            //const json = JSON.stringify(object); // превратили обычный объект в JSON
 
-            request.send(json); // помещаем JSON в body;
+            //request.send(json); // помещаем JSON в body;
 
-            request.addEventListener('load', () => {
+            fetch('server.php', {
+                method: "POST",
+                /* headers: {
+                    'Content-type': 'application/json'
+                }, */
+                body: formData
+            })
+            .then(data => data.text())
+            .then(data =>{
+                console.log(data);
+                showThanksModal(message.success);
+                statusMessage.remove();
+            })
+            .catch(() =>{
+                showThanksModal(message.failure);
+            })
+            .finally(() => {
+                form.reset();
+            });
+
+            /* request.addEventListener('load', () => {
                 if(request.status === 200) {
                     console.log(request.response);
                     showThanksModal(message.success);
@@ -266,7 +285,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
                 statusMessage.remove();
                 form.reset();
-            });
+            }); */
 
         });
     }
@@ -295,9 +314,5 @@ window.addEventListener('DOMContentLoaded', function() {
             closeModal();
         }, 4000);
     }
-
-   /*  fetch('https://jsonplaceholder.typicode.com/todos/1')
-        .then(response => response.json())
-        .then(json => console.log(json)); */
 
 });
