@@ -1,0 +1,22 @@
+{
+  "name": "project_food",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000p\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000-\u0000p\u0000r\u0000o\u0000p\u0000e\u0000r\u0000-\u0000f\u0000o\u0000o\u0000d\u0000-\u0000d\u0000e\u0000l\u0000i\u0000v\u0000e\u0000r\u0000y\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Henry111100010101100/project-proper-food-delivery.git"
+  },
+  "author": "Henry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Henry111100010101100/project-proper-food-delivery/issues"
+  },
+  "homepage": "https://github.com/Henry111100010101100/project-proper-food-delivery#readme",
+  "devDependencies": {
+    "json-server": "^0.17.1"
+  }
+}
