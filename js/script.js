@@ -1,3 +1,5 @@
+//const { url } = require("inspector");
+
 window.addEventListener('DOMContentLoaded', function() {
 
     // Tabs
@@ -215,10 +217,22 @@ window.addEventListener('DOMContentLoaded', function() {
     };
 
     forms.forEach(item => {
-        postData(item);
+        bindPostData(item);
     });
 
-    function postData(form) {
+    const postData = async (url, data) => {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            }, 
+            body: data
+        });
+
+        return await res.json();
+    };
+
+    function bindPostData(form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault(); // в AJAX-запросах эта команда должна быть первой во избежание различных ошибок
 
@@ -243,24 +257,21 @@ window.addEventListener('DOMContentLoaded', function() {
              
             const formData = new FormData(form); // нам нужно этот объект превратить в JSON, но formData - это довольно специфический объект, мы не можем прогнать его просто так в другой формат, для этого воспользуемся следующим приемом:
 
-            const object = {};
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+           
+            
 
+            /*  const object = {};
             formData.forEach(function(value, key){
                 object[key] = value; 
-            }); // формируем объект object на основании данных из formData путем использования перебора forEach()
+            }); */ // формируем объект object на основании данных из formData путем использования перебора forEach()
 
             // теперь, когда мы получили обычный объект из данных formData, мы можем преобразовать его в JSON:
 
             //request.send(json); // помещаем JSON в body;
 
-            fetch('server.php', {
-                method: "POST",
-                headers: {
-                    'Content-type': 'application/json'
-                }, 
-                body: JSON.stringify(object)
-            })
-            .then(data => data.text())
+            postData('http://localhost:3000/requests', json)
+            //.then(data => data.text())
             .then(data =>{
                 console.log(data);
                 showThanksModal(message.success);
@@ -313,7 +324,4 @@ window.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     }
 
-    fetch('http://localhost:3000/menu')
-        .then(data => data.json())
-        .then(res => console.log(res));
 });
