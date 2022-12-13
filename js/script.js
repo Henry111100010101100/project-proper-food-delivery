@@ -400,9 +400,21 @@ window.addEventListener('DOMContentLoaded', function() {
             slideIndex = slides.length;
         }
 
-        slides.forEach(item => item.style.display = 'none');
+        function hideSlides() {
+            slides.forEach(item => {
+                item.classList.add('hide');
+                item.classList.remove('show', 'fade');
+            });
+        }
+        
+        function showSlider(slideIndex) {
+            slides[slideIndex - 1].classList.add('show', 'fade');
+            slides[slideIndex - 1].classList.remove('hide');
+        }
 
-        slides[slideIndex - 1].style.display = 'block';
+        hideSlides();
+        showSlider(slideIndex);
+        
 
         if(slides.length < 10) {
             currentCounter.textContent = `0${slideIndex}`;
