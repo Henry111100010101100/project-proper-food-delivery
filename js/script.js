@@ -378,10 +378,18 @@ window.addEventListener('DOMContentLoaded', function() {
 
     const slides = document.querySelectorAll('.offer__slide'),
         prevSlide = document.querySelector('.offer__slider-prev'),
-        nextSlide = document.querySelector('.offer__slider-next');
+        nextSlide = document.querySelector('.offer__slider-next'),
+        totalCounter = document.querySelector('#total'),
+        currentCounter = document.querySelector('#current');
     let slideIndex = 1;
 
     showSlide(slideIndex);
+
+    if(slides.length < 10) {
+        totalCounter.textContent = `0${slides.length}`;
+    } else {
+        totalCounter.textContent = slides.length;
+    }
 
     function showSlide(n) {
         if(n > slides.length) {
@@ -395,6 +403,12 @@ window.addEventListener('DOMContentLoaded', function() {
         slides.forEach(item => item.style.display = 'none');
 
         slides[slideIndex - 1].style.display = 'block';
+
+        if(slides.length < 10) {
+            currentCounter.textContent = `0${slideIndex}`;
+        } else {
+            currentCounter.textContent = slideIndex;
+        }
     }
 
     function plusSlides(n) {
