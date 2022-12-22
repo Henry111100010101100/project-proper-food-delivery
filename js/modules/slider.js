@@ -1,25 +1,25 @@
-function slider() {
+function slider({container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}) {
     //Slider
 
-    const slides = document.querySelectorAll('.offer__slide'),
-        slider = document.querySelector('.offer__slider'),
-        prevSlide = document.querySelector('.offer__slider-prev'),
-        nextSlide = document.querySelector('.offer__slider-next'),
-        totalCounter = document.querySelector('#total'),
-        currentCounter = document.querySelector('#current'),
-        slidesWrapper = document.querySelector('.offer__slider-wrapper'),
-        slidesField = document.querySelector('.offer__slider-inner'),
+    const slides = document.querySelectorAll(slide),
+        slider = document.querySelector(container),
+        prevSlide = document.querySelector(prevArrow),
+        nextSlide = document.querySelector(nextArrow),
+        total = document.querySelector(totalCounter),
+        current = document.querySelector(currentCounter),
+        slidesWrapper = document.querySelector(wrapper),
+        slidesField = document.querySelector(field),
         width = window.getComputedStyle(slidesWrapper).width;
 
     let slideIndex = 1,
         offset = 0;
 
     if(slides.length < 10) {
-        totalCounter.textContent = `0${slides.length}`;
-        currentCounter.textContent = `0${slideIndex}`;
+        total.textContent = `0${slides.length}`;
+        current.textContent = `0${slideIndex}`;
     } else {
-        totalCounter.textContent = slides.length;
-        currentCounter.textContent = slideIndex;
+        total.textContent = slides.length;
+        current.textContent = slideIndex;
     }
 
     slidesField.style.width = 100 * slides.length + '%';
@@ -98,9 +98,9 @@ function slider() {
         }
 
         if(slides.length < 10) {
-            currentCounter.textContent = `0${slideIndex}`;
+            current.textContent = `0${slideIndex}`;
         } else {
-            currentCounter.textContent = slideIndex;
+            current.textContent = slideIndex;
         }
 
         dots.forEach(dot => dot.style.opacity = '.5');
@@ -124,9 +124,9 @@ function slider() {
         }
 
         if(slides.length < 10) {
-            currentCounter.textContent = `0${slideIndex}`;
+            current.textContent = `0${slideIndex}`;
         } else {
-            currentCounter.textContent = slideIndex;
+            current.textContent = slideIndex;
         }
 
         dots.forEach(dot => dot.style.opacity = '.5');
@@ -143,9 +143,9 @@ function slider() {
             slidesField.style.transform = `translateX(-${offset}px)`;
 
             if(slides.length < 10) {
-                currentCounter.textContent = `0${slideIndex}`;
+                current.textContent = `0${slideIndex}`;
             } else {
-                currentCounter.textContent = slideIndex;
+                current.textContent = slideIndex;
             }
 
             dots.forEach(dot => dot.style.opacity = '.5');
@@ -205,4 +205,4 @@ function slider() {
     }); */
 }
 
-module.exports = slider;
+export default slider;
